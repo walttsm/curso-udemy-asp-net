@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// builder.Services.AddOpenApi();
+builder.Services.AddOpenApi();
 
 string SqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -17,6 +17,8 @@ builder.Services.AddDbContext<CatalogoApiContext>(options =>
     options.UseMySql(SqlConnection, ServerVersion.AutoDetect(SqlConnection))
 );
 var app = builder.Build();
+app.UseRouting();
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

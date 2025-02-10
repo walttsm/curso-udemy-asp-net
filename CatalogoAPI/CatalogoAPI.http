@@ -4,3 +4,6 @@ GET {{CatalogoAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{CatalogoAPI_HostAddress}}/Products/
+Accept: application/json
