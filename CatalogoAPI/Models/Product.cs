@@ -4,13 +4,13 @@ using CatalogoAPI.Validators;
 
 namespace CatalogoAPI.Models;
 
-public class Product
+public class Product : IValidatableObject
 {
     public int Id { get; set; }
 
     [Required]
     [StringLength(80)]
-    [FirstLetterUpperCase]
+    // [FirstLetterUpperCase]
     public string? Name { get; set; }
 
     [Required]
@@ -30,4 +30,21 @@ public class Product
 
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (!string.IsNullOrEmpty(Name))
+        {
+            var firstLetter = Name[0].ToString();
+            if (firstLetter != firstLetter.ToUpper())
+            {
+                yield return new ValidationResult("First letter must be uppercase", [nameof(Name)]);
+            }
+        }
+
+        if (Stock <= 0)
+        {
+            yield return new ValidationResult("Stock has to be greater than 0", [nameof(Stock)]);
+        }
+    }
 }

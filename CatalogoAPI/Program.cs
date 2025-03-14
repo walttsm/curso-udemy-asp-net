@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddOpenApi();
 
-string SqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+string SqlConnection = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
 builder.Services.AddDbContext<CatalogoApiContext>(options =>
     options.UseMySql(SqlConnection, ServerVersion.AutoDetect(SqlConnection))
