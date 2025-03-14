@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CatalogoAPI.Validators;
 
 namespace CatalogoAPI.Models;
 
@@ -9,6 +10,7 @@ public class Product
 
     [Required]
     [StringLength(80)]
+    [FirstLetterUpperCase]
     public string? Name { get; set; }
 
     [Required]
