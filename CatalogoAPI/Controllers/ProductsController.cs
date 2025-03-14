@@ -2,6 +2,7 @@ using System.Diagnostics;
 using CatalogoAPI.Context;
 using CatalogoAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatalogoAPI.Controllers;
@@ -18,9 +19,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Product>> GetProducts()
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
     {
-        var p = _context.Products.ToList();
+        var p = await _context.Products.ToListAsync();
         if (p is null)
         {
             return NotFound("Não foram encontrados produtos");
@@ -29,9 +30,10 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("id:int")]
-    public ActionResult<Product> Get(int id)
+    public async Task<ActionResult<Product>> Get(int id, [BindRequired] string name)
     {
-        var prod = _context.Products.FirstOrDefault((p) => p.Id == id);
+        var productName = name;
+        var prod = await _context.Products.FirstOrDefaultAsync((p) => p.Id == id);
 
         if (prod is null)
         {
@@ -67,7 +69,7 @@ public class ProductsController : ControllerBase
         return Ok(p);
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{id:int:min(1)}")]
     public ActionResult Delete(int id)
     {
         var prod = _context.Products.FirstOrDefault(p => p.Id == id);

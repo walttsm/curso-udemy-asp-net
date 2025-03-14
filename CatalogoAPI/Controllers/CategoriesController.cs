@@ -35,7 +35,7 @@ public class CategoriesController : ControllerBase
         return _context.Categories.Include(p => p.Products).ToList();
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int:min(1)}")]
     public ActionResult<Category> getCategory(int id)
     {
         var cat = _context.Categories.FirstOrDefault(p => p.Id == id);
