@@ -13,6 +13,9 @@ builder.Services.AddOpenApi();
 
 string SqlConnection = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
+//var valor1 = builder.Configuration["key1"];
+//var valor2 = builder.Configuration["section1:key2"];
+
 builder.Services.AddDbContext<CatalogoApiContext>(options =>
     options.UseMySql(SqlConnection, ServerVersion.AutoDetect(SqlConnection))
 );

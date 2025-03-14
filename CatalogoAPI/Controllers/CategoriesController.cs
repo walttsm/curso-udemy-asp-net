@@ -11,10 +11,23 @@ namespace CatalogoAPI.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly CatalogoApiContext _context;
+    private readonly IConfiguration _configuration;
 
-    public CategoriesController(CatalogoApiContext context)
+    public CategoriesController(CatalogoApiContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
+    }
+
+    [HttpGet("LerConfig")]
+    public string GetValues()
+    {
+        var value1 = _configuration["key1"];
+        var value2 = _configuration["key2"];
+
+        var section1 = _configuration["section1:key2"];
+
+        return $"key1: {value1}, key2: {value2}, section1:key2: {section1}";
     }
 
     [HttpGet]
